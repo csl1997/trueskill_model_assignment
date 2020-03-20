@@ -1,232 +1,1362 @@
-\documentclass{article}
-\usepackage{amsthm,amsmath,amsfonts,amssymb,mathtools}
-\usepackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
-\usepackage{enumitem}
-\usepackage[margin=1in]{geometry}
+\documentclass[12pt,a4paper]{article}
 
-% Some useful macros.
-\newcommand{\given}{\,|\,}
-\newcommand{\trans}{\mathsf{T}}
-\newcommand{\bx}{\mathbf{x}}
-\newcommand{\by}{\mathbf{y}}
-\newcommand{\bw}{\mathbf{w}}
-\newcommand{\distNorm}{\mathcal{N}}
-\newcommand{\bzero}{\mathbf{0}}
-\newcommand{\btheta}{\boldsymbol{\theta}}
-\newcommand{\bpi}{\boldsymbol{\pi}}
-\newcommand{\ep}{\varepsilon}
-\def\ie{i.e.\ }
-\def\eg{e.g.\ }
-\def\iid{i.i.d.\ }
-\def\simiid{\sim_{\mbox{\tiny iid}}}
-\newcommand{\varv}{\mathbb{V}}
-\newcommand{\LL}[1]{\frac{\partial \log \pi(a_{#1}| s_{#1}, \theta)}{\partial \theta}}
-\newcommand{\PT}{\frac{\partial}{\partial \theta}}
-\newcommand{\PP}[1]{\frac{\partial}{\partial #1}}
-\newcommand{\PPH}{\frac{\partial}{\partial \phi}}
-\newcommand{\LP}[1]{\PT \log p(#1)}
-\newcommand{\LZ}[1]{\frac{\log \pi(z_{#1}| s_{#1}, \theta)}{\partial \theta}}
-\newcommand{\N}{\mathcal{N}}
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\hypersetup
+       {   pdfauthor = { Silun Chen 1003163774 },
+           pdftitle={ Assignment 2 },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+\title{ Assignment 2 }
+
+\author{ Silun Chen 1003163774 }
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
 
 \begin{document}
-\title{Assignment 2:\\Stochastic Variational Inference in the TrueSkill Model}
-\author{STA414/STA2014 and CSC412/CSC2506 Winter 2020\\
-  David Duvenaud and Jesse Bettencourt\\
-  Student Number
-}
+
 \maketitle
 
-The goal of this assignment is to get you familiar with the basics of
-Bayesian inference in large models with continuous latent variables, and the basics of stochastic variational inference.
+The goal of this assignment is to get you familiar with the basics of Bayesian inference in large models with continuous latent variables, and the basics of stochastic variational inference.
 
-\paragraph{Background}
-We'll implement a variant of the TrueSkill model, a player ranking system for competitive games originally developed for Halo 2.
-It is a generalization of the Elo rating system in Chess.
-For the curious, the original 2007 NIPS paper introducing the trueskill paper can be found here:
-\url{http://papers.nips.cc/paper/3079-trueskilltm-a-bayesian-skill-rating-system.pdf}
+Background We\ensuremath{\rq}ll implement a variant of the TrueSkill model, a player ranking system for competitive games originally developed for Halo 2. It is a generalization of the Elo rating system in Chess. For the curious, the original 2007 NIPS paper introducing the trueskill paper can be found here: http://papers. nips.cc/paper/3079-trueskilltm-a-bayesian-skill-rating-system.pdf This assignment is based on one developed by Carl Rasmussen at Cambridge for his course on probabilistic machine learning: http://mlg.eng.cam.ac.uk/teaching/4f13/1920/
 
-This assignment is based on one developed by Carl Rasmussen at Cambridge for his course on probabilistic machine learning:
-\url{http://mlg.eng.cam.ac.uk/teaching/4f13/1920/}
+\section{Model definition}
+We\ensuremath{\rq}ll consider a slightly simplified version of the original trueskill model. We assume that each player has a true, but unknown skill zi \ensuremath{\in} R. We use N to denote the number of players. The prior. The prior over each player\ensuremath{\rq}s skill is a standard normal distribution, and all player\ensuremath{\rq}s skills are a prior independent. The likelihood. For each observed game, the probability that player i beats player j, given the player\ensuremath{\rq}s skills zA and zB, is: where
 
+\[
+p(AbeatB|zA,zB)=\sigma(zi - zj)\\
+\sigma(y) = \frac{1}{1 + exp(- y)}
+\]
+There can be more than one game played between a pair of players, and in this case the outcome of each game is independent given the players\ensuremath{\rq} skills. We use M to denote the number of games. The data. The data will be an array of game outcomes. Each row contains a pair of player indices. The first index in each pair is the winner of the game, the second index is the loser. If there were M games played, then the array has shape M \ensuremath{\times} 2.
 
-\subsection{Model definition}
-We'll consider a slightly simplified version of the original trueskill model.
-We assume that each player has a true, but unknown skill $z_i \in \mathbb{R}$.
-We use $N$ to denote the number of players.
-
-\paragraph{The prior.}
-The prior over each player's skill is a standard normal distribution, and all player's skills are \emph{a prior} independent.  
-
-\paragraph{The likelihood.}
-For each observed game, the probability that player $i$ beats player $j$, given the player's skills $z_A$ and $z_B$, is:
-$$p(\textnormal{A beat B} | z_A, z_B) = \sigma(z_i - z_j)$$
-where
-$$\sigma(y) = \frac{1}{1 + \exp(-y)}$$
-There can be more than one game played between a pair of players, and in this case the outcome of each game is independent given the players' skills.
-We use $M$ to denote the number of games.
-
-\paragraph{The data.}
-The data will be an array of game outcomes.
-Each row contains a pair of player indices.
-The first index in each pair is the winner of the game, the second index is the loser.
-If there were $M$ games played, then the array has shape $M \times 2$.
-
-\pagebreak
 \section{Implementing the model [10 points]}
-\begin{enumerate}[label=(\alph*)]
-	\item {\bf [2 points]} Implement a function \texttt{log\_prior} that computes the log of the prior over all player's skills.
-  Specifically, given a $K \times N$ array where each row is a setting of the skills for all $N$ players, it returns a $K \times 1$ array, where each row contains a scalar giving the log-prior for that set of skills.
-  \item {\bf [3 points]} Implement a function \texttt{logp\_a\_beats\_b} that, given a pair of skills $z_a$ and $z_b$
-    evaluates the log-likelihood that player with skill $z_a$ beat player with skill $z_b$ under the model detailed above.
-    To ensure numerical stability, use the function  \texttt{log1pexp} that computes $\log(1 + \exp(x))$ in a numerically stable way.
-    This function is provided by \texttt{StatsFuns.jl} and imported already, and also by Python's numpy.
-  \item {\bf [3 points]} Assuming all game outcomes are i.i.d. conditioned on all players' skills, implement a function \texttt{all\_games\_log\_likelihood} that takes a batch of player skills \texttt{zs} and a collection of observed games \texttt{games} and gives a batch of log-likelihoods for those observations.
-  Specifically, given a $K \times N$ array where each row is a setting of the skills for all $N$ players, and an $M \times 2$ array of game outcomes, it returns a $K \times 1$ array, where each row contains a scalar giving the log-likelihood of all games for that set of skills.
-  Hint: You should be able to write this function without using for loops, although you might want to start that way to make sure what you've written is correct.  If $A$ is an array of integers, you can index the corresponding entries of another matrix $B$ for every entry in $A$ by writing \texttt{B[A]}.
-  \item {\bf [2 points]} Implement a function \texttt{joint\_log\_density} which combines the log-prior and log-likelihood of the observations to give $p(z_1, z_2, \dots, z_N, \text{all game outcomes})$
-\end{enumerate}
+\begin{itemize}
+\item[1. ] [2 points] Implement a function log prior that computes the log of the prior over all player\ensuremath{\rq}s skills. Specifically, given a K \ensuremath{\times} N array where each row is a setting of the skills for all N players, it returns a K \ensuremath{\times} 1 array, where each row contains a scalar giving the log-prior for that set of skills.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLnf{include}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}A2{\_}src.jl"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{using}@*) (*@\HLJLcs{Revise}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{lets}@*) (*@\HLJLcs{you}@*) (*@\HLJLcs{change}@*) (*@\HLJLcs{A2funcs}@*) (*@\HLJLcs{without}@*) (*@\HLJLcs{restarting}@*) (*@\HLJLcs{julia!}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{includet("{}A2{\_}src.jl"{})}@*)
+(*@\HLJLk{using}@*) (*@\HLJLn{Plots}@*)
+(*@\HLJLk{using}@*) (*@\HLJLn{Statistics}@*)(*@\HLJLoB{:}@*) (*@\HLJLn{mean}@*)
+(*@\HLJLk{using}@*) (*@\HLJLn{Zygote}@*)
+(*@\HLJLk{using}@*) (*@\HLJLn{Test}@*)
+(*@\HLJLk{using}@*) (*@\HLJLn{Logging}@*)
+(*@\HLJLk{using}@*) (*@\HLJLoB{.}@*)(*@\HLJLn{A2funcs}@*)(*@\HLJLoB{:}@*) (*@\HLJLn{log1pexp}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{log(1}@*) (*@\HLJLcs{+}@*) (*@\HLJLcs{exp(x))}@*) (*@\HLJLcs{stable}@*)
+(*@\HLJLk{using}@*) (*@\HLJLoB{.}@*)(*@\HLJLn{A2funcs}@*)(*@\HLJLoB{:}@*) (*@\HLJLn{factorized{\_}gaussian{\_}log{\_}density}@*)
+(*@\HLJLk{using}@*) (*@\HLJLoB{.}@*)(*@\HLJLn{A2funcs}@*)(*@\HLJLoB{:}@*) (*@\HLJLn{skillcontour!}@*)
+(*@\HLJLk{using}@*) (*@\HLJLoB{.}@*)(*@\HLJLn{A2funcs}@*)(*@\HLJLoB{:}@*) (*@\HLJLn{plot{\_}line{\_}equal{\_}skill!}@*)
+
+(*@\HLJLk{function}@*) (*@\HLJLnf{log{\_}prior}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLnf{factorized{\_}gaussian{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*) (*@\HLJLni{0}@*)(*@\HLJLp{,}@*) (*@\HLJLn{zs}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+log_prior (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[2. ] [3 points] Implement a function logp a beats b that, given a pair of skills za and zb evaluates the log-likelihood that player with skill za beat player with skill zb under the model detailed above. To ensure numerical stability, use the function log1pexp that computes log(1 + exp(x)) in a numerically stable way. This function is provided by StatsFuns.jl and imported already, and also by Python\ensuremath{\rq}s numpy.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLk{function}@*) (*@\HLJLnf{logp{\_}a{\_}beats{\_}b}@*)(*@\HLJLp{(}@*)(*@\HLJLn{za}@*)(*@\HLJLp{,}@*)(*@\HLJLn{zb}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLoB{-}@*)(*@\HLJLp{(}@*)(*@\HLJLn{log1pexp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLp{(}@*)(*@\HLJLn{za}@*) (*@\HLJLoB{.-}@*) (*@\HLJLn{zb}@*)(*@\HLJLp{)))}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+logp_a_beats_b (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[3. ] [3 points] Assuming all game outcomes are i.i.d. conditioned on all players\ensuremath{\rq} skills, implement a function all games log likelihood that takes a batch of player skills zs and a collection of observed games games and gives a batch of log-likelihoods for those observations. Specifically, given a K \ensuremath{\times} N array where each row is a setting of the skills for all N players, and an M \ensuremath{\times} 2 array of game outcomes, it returns a K \ensuremath{\times} 1 array, where each row contains a scalar giving the log-likelihood of all games for that set of skills. Hint: You should be able to write this function without using for loops, although you might want to start that way to make sure what you\ensuremath{\rq}ve written is correct. If A is an array of integers, you can index the corresponding entries of another matrix B for every entry in A by writing B[A].
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLk{function}@*) (*@\HLJLnf{all{\_}games{\_}log{\_}likelihood}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{games}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{zs{\_}a}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{zs}@*)(*@\HLJLp{[}@*)(*@\HLJLn{games}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*) (*@\HLJLni{1}@*)(*@\HLJLp{],}@*) (*@\HLJLoB{:}@*)(*@\HLJLp{]}@*)
+  (*@\HLJLn{zs{\_}b}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{zs}@*)(*@\HLJLp{[}@*)(*@\HLJLn{games}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*) (*@\HLJLni{2}@*)(*@\HLJLp{],}@*) (*@\HLJLoB{:}@*)(*@\HLJLp{]}@*)
+  (*@\HLJLn{likelihoods}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{logp{\_}a{\_}beats{\_}b}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs{\_}a}@*)(*@\HLJLp{,}@*) (*@\HLJLn{zs{\_}b}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLnf{sum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{likelihoods}@*)(*@\HLJLp{,}@*) (*@\HLJLn{dims}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+all_games_log_likelihood (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[4. ] [2 points] Implement a function joint log density which combines the log-prior and log-likelihood of the observations to give p(z1 , z2 , . . . ,  zN , all game outcomes)
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLk{function}@*) (*@\HLJLnf{joint{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{games}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLnf{log{\_}prior}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{.+}@*) (*@\HLJLnf{all{\_}games{\_}log{\_}likelihood}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{games}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+
+(*@\HLJLnd{@testset}@*) (*@\HLJLs{"{}Test}@*) (*@\HLJLs{shapes}@*) (*@\HLJLs{of}@*) (*@\HLJLs{batches}@*) (*@\HLJLs{for}@*) (*@\HLJLs{likelihoods"{}}@*) (*@\HLJLk{begin}@*)
+  (*@\HLJLn{B}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{15}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{number}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{elements}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{batch}@*)
+  (*@\HLJLn{N}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{4}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Total}@*) (*@\HLJLcs{Number}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{Players}@*)
+  (*@\HLJLn{test{\_}zs}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{randn}@*)(*@\HLJLp{(}@*)(*@\HLJLni{4}@*)(*@\HLJLp{,}@*)(*@\HLJLni{15}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{test{\_}games}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLni{1}@*) (*@\HLJLni{2}@*)(*@\HLJLp{;}@*) (*@\HLJLni{3}@*) (*@\HLJLni{1}@*)(*@\HLJLp{;}@*) (*@\HLJLni{4}@*) (*@\HLJLni{2}@*)(*@\HLJLp{]}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{1}@*) (*@\HLJLcs{beat}@*) (*@\HLJLcs{2,}@*) (*@\HLJLcs{3}@*) (*@\HLJLcs{beat}@*) (*@\HLJLcs{1,}@*) (*@\HLJLcs{4}@*) (*@\HLJLcs{beat}@*) (*@\HLJLcs{2}@*)
+  (*@\HLJLnd{@test}@*) (*@\HLJLnf{size}@*)(*@\HLJLp{(}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{==}@*) (*@\HLJLp{(}@*)(*@\HLJLn{N}@*)(*@\HLJLp{,}@*)(*@\HLJLn{B}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLcs{{\#}batch}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{priors}@*)
+  (*@\HLJLnd{@test}@*) (*@\HLJLnf{size}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{log{\_}prior}@*)(*@\HLJLp{(}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{))}@*) (*@\HLJLoB{==}@*) (*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{B}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{loglikelihood}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{p1}@*) (*@\HLJLcs{beat}@*) (*@\HLJLcs{p2}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{first}@*) (*@\HLJLcs{sample}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{batch}@*)
+  (*@\HLJLnd{@test}@*) (*@\HLJLnf{size}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{logp{\_}a{\_}beats{\_}b}@*)(*@\HLJLp{(}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]))}@*) (*@\HLJLoB{==}@*) (*@\HLJLp{()}@*)
+  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{loglikelihood}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{p1}@*) (*@\HLJLcs{beat}@*) (*@\HLJLcs{p2}@*) (*@\HLJLcs{broadcasted}@*) (*@\HLJLcs{over}@*) (*@\HLJLcs{whole}@*) (*@\HLJLcs{batch}@*)
+  (*@\HLJLnd{@test}@*) (*@\HLJLnf{size}@*)(*@\HLJLp{(}@*)(*@\HLJLn{logp{\_}a{\_}beats{\_}b}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]))}@*) (*@\HLJLoB{==}@*) (*@\HLJLp{(}@*)(*@\HLJLn{B}@*)(*@\HLJLp{,)}@*)
+  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{batch}@*) (*@\HLJLcs{loglikelihood}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{evidence}@*)
+  (*@\HLJLnd{@test}@*) (*@\HLJLnf{size}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{all{\_}games{\_}log{\_}likelihood}@*)(*@\HLJLp{(}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{test{\_}games}@*)(*@\HLJLp{))}@*) (*@\HLJLoB{==}@*) (*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{B}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{batch}@*) (*@\HLJLcs{loglikelihood}@*) (*@\HLJLcs{under}@*) (*@\HLJLcs{joint}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{evidence}@*) (*@\HLJLcs{and}@*) (*@\HLJLcs{prior}@*)
+  (*@\HLJLnd{@test}@*) (*@\HLJLnf{size}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joint{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{test{\_}zs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{test{\_}games}@*)(*@\HLJLp{))}@*) (*@\HLJLoB{==}@*) (*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{B}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Test Summary:                          | Pass  Total
+Test shapes of batches for likelihoods |    6      6
+Test.DefaultTestSet("Test shapes of batches for likelihoods", Any[], 6, fal
+se)
+\end{lstlisting}
+
 
 \section{Examining the posterior for only two players and toy data [10 points]}
-To get a feel for this model, we'll first consider the case where we only have 2 players, $A$ and $B$.
-We'll examine how the prior and likelihood interact when conditioning on different sets of games. 
+To get a feel for this model, we\ensuremath{\rq}ll first consider the case where we only have 2 players, A and B. We\ensuremath{\rq}ll examine how the prior and likelihood interact when conditioning on different sets of games.
 
-Provided in the starter code is a function \texttt{skillcontour!} which evaluates a provided function on a grid of $z_A$ and $z_B$'s and plots the isocontours of that function.
-As well there is a function \texttt{plot\_line\_equal\_skill!}. 
-We have included an example for how you can use these functions.
+Provided in the starter code is a function skillcontour! which evaluates a provided function on a grid of zA and zB\ensuremath{\rq}s and plots the isocontours of that function. As well there is a function plot line equal skill!. We have included an example for how you can use these functions.
 
-We also provided a function \texttt{two\_player\_toy\_games} which produces toy data for two players.
-I.e. \texttt{two\_player\_toy\_games(5,3)} produces a dataset where player A wins 5 games and player B wins 3 games.
-
-\begin{enumerate}[label=(\alph*)]
-\item {\bf [2 points]}  For two players $A$ and $B$, plot the isocontours of the joint prior over their skills.  Also plot the line of equal skill, $z_A = z_B$.
-Hint: you've already implemented the \textbf{log} of the likelihood function.
-
-\item {\bf [2 points]} Plot the isocontours of the likelihood function. 
-Also plot the line of equal skill, $z_A = z_B$.
-
-\item {\bf [2 points]}  Plot isocountours of the joint posterior over $z_A$ and $z_B$ given that player A
-beat player B in one match.  Since the contours don't depend on the normalization
-constant, you can simply plot the isocontours of the log of joint distribution of
-$p(z_A, z_B, \text{A beat B})$
-Also plot the line of equal skill, $z_A = z_B$.
-
-\item {\bf [2 points]}  Plot isocountours of the joint posterior over $z_A$ and $z_B$ given that
-10 matches were played, and player A beat player B all 10 times.
-Also plot the line of equal skill, $z_A = z_B$.
-
-\item {\bf [2 points]}  Plot isocountours of the joint posterior over $z_A$ and $z_B$ given that
-20 matches were played, and each player beat the other 10 times.
-Also plot the line of equal skill, $z_A = z_B$.
-\end{enumerate}
-For all plots, label both axes.
-
-\pagebreak
-\section{Stochastic Variational Inference on Two Players and Toy Data [18 points]}
-
-One nice thing about a Bayesian approach is that it separates the model specification from the approximate inference strategy.
-The original Trueskill paper from 2007 used message passing.
-Carl Rasmussen's assignment uses Gibbs sampling, a form of Markov Chain Monte Carlo.
-We'll use gradient-based stochastic variational inference, which wasn't invented until around 2014. 
-
-In this question we will optimize an approximate posterior distribution with
-stochastic variational inference to approximate the true posterior.
-
-\begin{enumerate}[label=(\alph*)]
-  \item {\bf [5 points]} Implement a function \texttt{elbo} which computes an unbiased estimate of 
-    the evidence lower bound.
-    As discussed in class, the ELBO is equal to the KL divergence between the true posterior $p(z|\text{data})$, and an approximate posterior, $q_\phi(z|\text{data})$, plus an unknown constant.
-    Use a fully-factorized Gaussian distribution for $q_\phi(z|\text{data})$.
-    This estimator takes the following arguments:
-    \begin{itemize}
-    	\item \texttt{params}, the parameters $\phi$ of the approximate posterior $q_\phi(z|\text{data})$.
-    	\item A function \texttt{logp}, which is equal to the true posterior plus a constant.  This function must take a batch of samples of $z$.  If we have $N$ players, we can consider $B$-many samples from the joint over all players' skills.
-    	This batch of samples \texttt{zs} will be an array with dimensions $(N,B)$.
-    	\item \texttt{num\_samples}, the number of samples to take.
-    \end{itemize}
-    This function should return a single scalar.
-    Hint: You will need to use the reparamterization trick when sampling \texttt{zs}.
-  \item {\bf [2 points]} Write a loss function called \texttt{neg\_toy\_elbo}
-    that takes variational distribution parameters and an array of game outcomes, and returns the negative
-    elbo estimate with 100 samples.
-  \item {\bf [5 points]} Write an optimization function called \texttt{fit\_toy\_variational\_dist}
-    which takes initial variational parameters, and the evidence.
-    Inside it will perform a number of iterations of gradient descent where for each iteration :
-    \begin{enumerate}
-      \item Compute the gradient of the loss with respect to the parameters using automatic differentiation.
-      \item Update the parameters by taking an \texttt{lr}-scaled step in the direction of the descending gradient.
-      \item Report the loss with the new parameters (using \texttt{@info} or print statements)
-      \item On the same set of axes plot the target distribution in red and the variational approximation in blue.
-    \end{enumerate}
-    Return the parameters resulting from training.
-  \item {\bf [2 points]} Initialize a variational distribution parameters and optimize them to approximate the joint
-    where we observe player A winning 1 game.
-    Report the final loss.
-    Also plot the optimized variational approximation contours (in blue) aand the target distribution (in red) on the same axes.
-  \item {\bf [2 points]} Initialize a variational distribution parameters and optimize them to approximate the joint
-    where we observe player A winning 10 games.
-    Report the final loss.
-    Also plot the optimized variational approximation contours (in blue) aand the target distribution (in red) on the same axes.
-  \item {\bf [2 points]} Initialize a variational distribution parameters and optimize them to approximate the joint
-    where we observe player A winning 10 games and player B winning 10 games.
-    Report the final loss.
-    Also plot the optimized variational approximation contours (in blue) aand the target distribution (in red) on the same axes.
-\end{enumerate}
-For all plots, label both axes.
-
-\pagebreak
-\section{Approximate inference conditioned on real data [24 points]}
-Load the dataset from \texttt{tennis\_data.mat} containing two matrices:
+We also provided a function two player toy games which produces toy data for two players. I.e. two player toy games(5,3) produces a dataset where player A wins 5 games and player B wins 3 games.
 
 \begin{itemize}
-	\item W is a 107 by 1 matrix, whose $i$’th entry is the name of player $i$.
-	\item G is a 1801 by 2 matrix of game outcomes (actually tennis matches), one row per game.
-The first column contains the indices of the players who won.
-The second column contains the indices of the player who lost.
+\item[1. ] [2 points] For two players A and B, plot the isocontours of the joint prior over their skills. Also plot the line of equal skill, zA = zB. Hint: you\ensuremath{\rq}ve already implemented the log of the likelihood function.
+
 \end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Convenience}@*) (*@\HLJLcs{function}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{producing}@*) (*@\HLJLcs{toy}@*) (*@\HLJLcs{games}@*) (*@\HLJLcs{between}@*) (*@\HLJLcs{two}@*) (*@\HLJLcs{players.}@*)
+(*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLn{p1{\_}wins}@*)(*@\HLJLp{,}@*) (*@\HLJLn{p2{\_}wins}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{vcat}@*)(*@\HLJLp{([}@*)(*@\HLJLnf{repeat}@*)(*@\HLJLp{([}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*)(*@\HLJLoB{{\textquotesingle}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p1{\_}wins}@*)(*@\HLJLp{),}@*) (*@\HLJLnf{repeat}@*)(*@\HLJLp{([}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)(*@\HLJLoB{{\textquotesingle}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p2{\_}wins}@*)(*@\HLJLp{)]}@*)(*@\HLJLoB{...}@*)(*@\HLJLp{)}@*)
+
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Example}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{how}@*) (*@\HLJLcs{to}@*) (*@\HLJLcs{use}@*) (*@\HLJLcs{contour}@*) (*@\HLJLcs{plotting}@*) (*@\HLJLcs{code}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Example}@*) (*@\HLJLs{Gaussian}@*) (*@\HLJLs{Contour}@*) (*@\HLJLs{Plot"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{1}@*) (*@\HLJLs{Skill"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{2}@*) (*@\HLJLs{Skill"{}}@*)
+   (*@\HLJLp{)}@*)
+(*@\HLJLnf{example{\_}gaussian}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{factorized{\_}gaussian{\_}log{\_}density}@*)(*@\HLJLp{([}@*)(*@\HLJLoB{-}@*)(*@\HLJLnfB{1.}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{2.}@*)(*@\HLJLp{],[}@*)(*@\HLJLnfB{0.}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{],}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{))}@*)
+(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{example{\_}gaussian}@*)(*@\HLJLp{)}@*)(*@\HLJLcs{{\#};}@*) (*@\HLJLcs{l="{}example}@*) (*@\HLJLcs{gaussian"{})}@*)
+(*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+(*@\HLJLnf{savefig}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joinpath}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}plots"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLs{"{}example{\_}gaussian.pdf"{}}@*)(*@\HLJLp{))}@*)
+
+
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{prior}@*) (*@\HLJLcs{contours}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Prior}@*) (*@\HLJLs{Contour}@*) (*@\HLJLs{Plot"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{1}@*) (*@\HLJLs{Skill"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{2}@*) (*@\HLJLs{Skill"{}}@*)
+   (*@\HLJLp{)}@*)
+(*@\HLJLnf{prior}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{log{\_}prior}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{))}@*)
+(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prior}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{figures/A2_5_1.pdf}
+
+\begin{itemize}
+\item[2. ] [2 points] Plot the isocontours of the likelihood function. Also plot the line of equal skill, zA = zB.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Likelihood}@*) (*@\HLJLs{Contour}@*) (*@\HLJLs{Plot"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{1}@*) (*@\HLJLs{Skill"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{2}@*) (*@\HLJLs{Skill"{}}@*)
+   (*@\HLJLp{)}@*)
+(*@\HLJLn{games{\_}1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*) (*@\HLJLni{0}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{likelihood}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{all{\_}games{\_}log{\_}likelihood}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}1}@*)(*@\HLJLp{))}@*)
+(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{likelihood}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+(*@\HLJLnf{savefig}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joinpath}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}plots"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLs{"{}likelihood{\_}contours.pdf"{}}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[3. ] [2 points] Plot isocountours of the joint posterior over zA and zB given that player A beat player B in one match. Since the contours don\ensuremath{\rq}t depend on the normalization constant, you can simply plot the isocontours of the log of joint distribution of p(zA,zB,A beat B) Also plot the line of equal skill, zA =zB.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{joint}@*) (*@\HLJLcs{contours}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{player}@*) (*@\HLJLcs{A}@*) (*@\HLJLcs{winning}@*) (*@\HLJLcs{1}@*) (*@\HLJLcs{game}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Joint}@*) (*@\HLJLs{Contour}@*) (*@\HLJLs{Plot}@*) (*@\HLJLs{(A}@*) (*@\HLJLs{wins}@*) (*@\HLJLs{1}@*) (*@\HLJLs{game)"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{A}@*) (*@\HLJLs{Skill"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{B}@*) (*@\HLJLs{Skill"{}}@*)
+   (*@\HLJLp{)}@*)
+(*@\HLJLnf{joint}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joint{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}1}@*)(*@\HLJLp{))}@*)
+(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{joint}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{figures/A2_7_1.pdf}
+
+\begin{itemize}
+\item[4. ] [2 points] Plot isocountours of the joint posterior over zA and zB given that 10 matches were played, and player A beat player B all 10 times. Also plot the line of equal skill, zA = zB.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{joint}@*) (*@\HLJLcs{contours}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{player}@*) (*@\HLJLcs{A}@*) (*@\HLJLcs{winning}@*) (*@\HLJLcs{10}@*) (*@\HLJLcs{games}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Joint}@*) (*@\HLJLs{Contour}@*) (*@\HLJLs{Plot}@*) (*@\HLJLs{(A}@*) (*@\HLJLs{wins}@*) (*@\HLJLs{10}@*) (*@\HLJLs{games)"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{A}@*) (*@\HLJLs{Skill"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{B}@*) (*@\HLJLs{Skill"{}}@*)
+   (*@\HLJLp{)}@*)
+(*@\HLJLn{games{\_}10}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*) (*@\HLJLni{0}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{joint{\_}10}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joint{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}10}@*)(*@\HLJLp{))}@*)
+(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{joint{\_}10}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{figures/A2_8_1.pdf}
+
+\begin{itemize}
+\item[5. ] [2 points] Plot isocountours of the joint posterior over zA and zB given that 20 matches were played, and each player beat the other 10 times. Also plot the line of equal skill, zA = zB.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{joint}@*) (*@\HLJLcs{contours}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{player}@*) (*@\HLJLcs{A}@*) (*@\HLJLcs{winning}@*) (*@\HLJLcs{10}@*) (*@\HLJLcs{games}@*) (*@\HLJLcs{and}@*) (*@\HLJLcs{player}@*) (*@\HLJLcs{B}@*) (*@\HLJLcs{winning}@*) (*@\HLJLcs{10}@*) (*@\HLJLcs{games}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Joint}@*) (*@\HLJLs{Contour}@*) (*@\HLJLs{Plot}@*) (*@\HLJLs{(Both}@*) (*@\HLJLs{A}@*) (*@\HLJLs{and}@*) (*@\HLJLs{B}@*) (*@\HLJLs{win}@*) (*@\HLJLs{10}@*) (*@\HLJLs{games)"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{A}@*) (*@\HLJLs{Skill"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Player}@*) (*@\HLJLs{B}@*) (*@\HLJLs{Skill"{}}@*)
+   (*@\HLJLp{)}@*)
+(*@\HLJLn{games{\_}10{\_}10}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*) (*@\HLJLni{10}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{joint{\_}10{\_}10}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joint{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}10{\_}10}@*)(*@\HLJLp{))}@*)
+(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{joint{\_}10{\_}10}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{figures/A2_9_1.pdf}
+
+For all plots, label both axes.
+
+\section{Stochastic Variational Inference on Two Players and Toy Data [18 points]}
+One nice thing about a Bayesian approach is that it separates the model specification from the approxi- mate inference strategy. The original Trueskill paper from 2007 used message passing. Carl Rasmussen\ensuremath{\rq}s assignment uses Gibbs sampling, a form of Markov Chain Monte Carlo. We\ensuremath{\rq}ll use gradient-based stochastic variational inference, which wasn\ensuremath{\rq}t invented until around 2014.
+
+In this question we will optimize an approximate posterior distribution with stochastic variational infer- ence to approximate the true posterior.
+
+\begin{itemize}
+\item[1. ] [5 points] Implement a function elbo which computes an unbiased estimate of the evidence lower bound. As discussed in class, the ELBO is equal to the KL divergence between the true posterior p(z|data), and an approximate posterior, q\ensuremath{\varphi}(z|data), plus an unknown constant. Use a fully-factorized Gaussian distributionfor q\ensuremath{\varphi}(z|data). This estimator takes the following arguments:
+
+\end{itemize}
+\ensuremath{\bullet} params, the parameters \ensuremath{\varphi} of the approximate posterior q\ensuremath{\varphi}(z|data).
+
+\ensuremath{\bullet} A function logp, which is equal to the true posterior plus a constant. This function must take a batch of samples of z. If we have N players, we can consider B-many samples from the joint over all players\ensuremath{\rq} skills. This batch of samples zs will be an array with dimensions (N,B).
+
+\ensuremath{\bullet} num samples, the number of samples to take.
+
+This function should return a single scalar. Hint: You will need to use the reparamterization trick when sampling zs.
+
+
+\begin{lstlisting}
+(*@\HLJLk{function}@*) (*@\HLJLnf{elbo}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params}@*)(*@\HLJLp{,}@*)(*@\HLJLn{logp}@*)(*@\HLJLp{,}@*)(*@\HLJLn{num{\_}samples}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{mu}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+  (*@\HLJLn{ls}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*)
+  (*@\HLJLn{s}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{randn}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{size}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*) (*@\HLJLn{num{\_}samples}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{s}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ls}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{.+}@*) (*@\HLJLn{mu}@*)
+  (*@\HLJLn{logp{\_}estimate}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{logp}@*)(*@\HLJLp{(}@*)(*@\HLJLn{samples}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{logq{\_}estimate}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{factorized{\_}gaussian{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ls}@*)(*@\HLJLp{,}@*) (*@\HLJLn{samples}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLnf{sum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{logp{\_}estimate}@*) (*@\HLJLoB{.-}@*) (*@\HLJLn{logq{\_}estimate}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{./}@*) (*@\HLJLn{num{\_}samples}@*)(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{should}@*) (*@\HLJLcs{return}@*) (*@\HLJLcs{scalar}@*) (*@\HLJLcs{(hint:}@*) (*@\HLJLcs{average}@*) (*@\HLJLcs{over}@*) (*@\HLJLcs{batch)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+elbo (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[2. ] [2 points] Write a loss function called neg toy elbo that takes variational distribution parameters and an array of game outcomes, and returns the negative elbo estimate with 100 samples.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Conveinence}@*) (*@\HLJLcs{function}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{taking}@*) (*@\HLJLcs{gradients}@*)
+(*@\HLJLk{function}@*) (*@\HLJLnf{neg{\_}toy{\_}elbo}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params}@*)(*@\HLJLp{;}@*) (*@\HLJLn{games}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{0}@*)(*@\HLJLp{),}@*) (*@\HLJLn{num{\_}samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{100}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{TODO:}@*) (*@\HLJLcs{Write}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{function}@*) (*@\HLJLcs{that}@*) (*@\HLJLcs{takes}@*) (*@\HLJLcs{parameters}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{q,}@*)
+  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{evidence}@*) (*@\HLJLcs{as}@*) (*@\HLJLcs{an}@*) (*@\HLJLcs{array}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{game}@*) (*@\HLJLcs{outcomes,}@*)
+  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{and}@*) (*@\HLJLcs{returns}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{-elbo}@*) (*@\HLJLcs{estimate}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{num{\_}samples}@*) (*@\HLJLcs{many}@*) (*@\HLJLcs{samples}@*) (*@\HLJLcs{from}@*) (*@\HLJLcs{q}@*)
+  (*@\HLJLnf{logp}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{joint{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{games}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLoB{-}@*)(*@\HLJLnf{elbo}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params}@*)(*@\HLJLp{,}@*)(*@\HLJLn{logp}@*)(*@\HLJLp{,}@*) (*@\HLJLn{num{\_}samples}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+neg_toy_elbo (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[3. ] [5 points] Write an optimization function called fit toy variational dist which takes initial vari- ational parameters, and the evidence. Inside it will perform a number of iterations of gradient descent where for each iteration :
+
+\end{itemize}
+(a)  Compute the gradient of the loss with respect to the parameters using automatic differentiation.
+
+(b)  Update the parameters by taking an lr-scaled step in the direction of the descending gradient.
+
+(c)  Report the loss with the new parameters (using @info or print statements)
+
+(d)  On the same set of axes plot the target distribution in red and the variational approximation in blue.
+
+Return the parameters resulting from training.
+
+
+\begin{lstlisting}
+(*@\HLJLn{num{\_}players{\_}toy}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)
+(*@\HLJLn{toy{\_}mu}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLoB{-}@*)(*@\HLJLnfB{2.}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{3.}@*)(*@\HLJLp{]}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Initial}@*) (*@\HLJLcs{mu,}@*) (*@\HLJLcs{can}@*) (*@\HLJLcs{initialize}@*) (*@\HLJLcs{randomly!}@*)
+(*@\HLJLn{toy{\_}ls}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{0.}@*)(*@\HLJLp{]}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Initual}@*) (*@\HLJLcs{log{\_}sigma,}@*) (*@\HLJLcs{can}@*) (*@\HLJLcs{initialize}@*) (*@\HLJLcs{randomly!}@*)
+(*@\HLJLn{toy{\_}params{\_}init}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{toy{\_}mu}@*)(*@\HLJLp{,}@*) (*@\HLJLn{toy{\_}ls}@*)(*@\HLJLp{)}@*)
+
+(*@\HLJLk{function}@*) (*@\HLJLnf{fit{\_}toy{\_}variational{\_}dist}@*)(*@\HLJLp{(}@*)(*@\HLJLn{init{\_}params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{toy{\_}evidence}@*)(*@\HLJLp{;}@*) (*@\HLJLn{num{\_}itrs}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{200}@*)(*@\HLJLp{,}@*) (*@\HLJLn{lr}@*)(*@\HLJLoB{=}@*) (*@\HLJLnfB{1e-2}@*)(*@\HLJLp{,}@*) (*@\HLJLn{num{\_}q{\_}samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{10}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{params{\_}cur}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{init{\_}params}@*)
+  (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLkp{in}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{num{\_}itrs}@*)
+    (*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{gradients}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{variational}@*) (*@\HLJLcs{objective}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{respect}@*) (*@\HLJLcs{to}@*) (*@\HLJLcs{parameters}@*)
+    (*@\HLJLn{grad{\_}params}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{gradient}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params}@*) (*@\HLJLoB{->}@*)
+    (*@\HLJLnf{neg{\_}toy{\_}elbo}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{toy{\_}evidence}@*)(*@\HLJLp{,}@*) (*@\HLJLn{num{\_}samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{num{\_}q{\_}samples}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLp{,}@*) (*@\HLJLn{params{\_}cur}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{update}@*) (*@\HLJLcs{paramters}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{lr-sized}@*) (*@\HLJLcs{step}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{descending}@*) (*@\HLJLcs{gradient}@*)
+    (*@\HLJLn{params{\_}cur}@*) (*@\HLJLoB{=}@*)  (*@\HLJLn{params{\_}cur}@*) (*@\HLJLoB{.-}@*) (*@\HLJLn{lr}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{grad{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+    (*@\HLJLn{neg{\_}elbo}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{neg{\_}toy{\_}elbo}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params{\_}cur}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{toy{\_}evidence}@*)(*@\HLJLp{,}@*) (*@\HLJLn{num{\_}samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{num{\_}q{\_}samples}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnd{@info}@*) (*@\HLJLs{"{}elbo:}@*) (*@\HLJLsi{{\$}neg{\_}elbo}@*)(*@\HLJLs{"{}}@*)(*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{report}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{current}@*) (*@\HLJLcs{elbbo}@*) (*@\HLJLcs{during}@*) (*@\HLJLcs{training}@*)
+    (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{true}@*) (*@\HLJLcs{posterior}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{red}@*) (*@\HLJLcs{and}@*) (*@\HLJLcs{variational}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{blue}@*)
+    (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{hint:}@*) (*@\HLJLcs{call}@*) (*@\HLJLcs{{\textquotesingle}display{\textquotesingle}}@*) (*@\HLJLcs{on}@*) (*@\HLJLcs{final}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{to}@*) (*@\HLJLcs{make}@*) (*@\HLJLcs{it}@*) (*@\HLJLcs{display}@*) (*@\HLJLcs{during}@*) (*@\HLJLcs{training}@*)
+    (*@\HLJLnf{plot}@*)(*@\HLJLp{();}@*)
+    (*@\HLJLnf{likelihood{\_}tar}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joint{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*) (*@\HLJLn{toy{\_}evidence}@*)(*@\HLJLp{))}@*)
+    (*@\HLJLnf{likelihood{\_}var}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{factorized{\_}gaussian{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params{\_}cur}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*) (*@\HLJLn{params{\_}cur}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{],}@*) (*@\HLJLn{zs}@*)(*@\HLJLp{))}@*)
+    (*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{likelihood{\_}tar}@*)(*@\HLJLp{,}@*) (*@\HLJLn{colour}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{red}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{likelihood}@*) (*@\HLJLcs{contours}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{target}@*) (*@\HLJLcs{posterior}@*)
+    (*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+    (*@\HLJLnf{display}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{likelihood{\_}var}@*)(*@\HLJLp{,}@*) (*@\HLJLn{colour}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{blue}@*)(*@\HLJLp{))}@*) (*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{likelihood}@*) (*@\HLJLcs{contours}@*) (*@\HLJLcs{for}@*) (*@\HLJLcs{variational}@*) (*@\HLJLcs{posterior}@*)
+  (*@\HLJLk{end}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLn{params{\_}cur}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+fit_toy_variational_dist (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[4. ] [2 points] Initialize a variational distribution parameters and optimize them to approximate the joint where we observe player A winning 1 game. Report the final loss. Also plot the optimized variational approximation contours (in blue) aand the target distribution (in red) on the same axes.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLn{games{\_}1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{0}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{init{\_}params}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{toy{\_}mu}@*)(*@\HLJLp{,}@*) (*@\HLJLn{toy{\_}ls}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{fit{\_}toy{\_}variational{\_}dist}@*)(*@\HLJLp{(}@*)(*@\HLJLn{init{\_}params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}1}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+([0.3042098915656241, -0.0930267818328127], [-0.11741181358303791, -0.08007
+009655770879])
+\end{lstlisting}
+
+\includegraphics[width=0.1\textwidth]{figures/A2_13_1.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_2.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_3.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_4.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_5.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_6.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_7.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_8.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_9.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_10.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_11.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_12.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_13.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_14.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_15.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_16.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_17.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_18.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_19.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_20.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_21.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_22.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_23.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_24.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_25.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_26.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_27.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_28.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_29.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_30.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_31.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_32.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_33.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_34.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_35.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_36.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_37.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_38.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_39.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_40.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_41.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_42.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_43.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_44.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_45.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_46.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_47.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_48.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_49.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_50.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_51.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_52.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_53.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_54.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_55.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_56.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_57.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_58.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_59.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_60.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_61.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_62.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_63.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_64.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_65.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_66.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_67.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_68.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_69.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_70.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_71.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_72.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_73.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_74.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_75.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_76.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_77.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_78.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_79.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_80.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_81.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_82.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_83.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_84.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_85.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_86.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_87.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_88.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_89.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_90.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_91.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_92.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_93.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_94.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_95.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_96.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_97.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_98.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_99.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_100.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_101.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_102.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_103.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_104.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_105.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_106.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_107.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_108.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_109.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_110.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_111.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_112.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_113.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_114.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_115.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_116.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_117.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_118.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_119.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_120.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_121.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_122.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_123.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_124.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_125.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_126.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_127.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_128.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_129.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_130.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_131.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_132.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_133.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_134.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_135.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_136.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_137.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_138.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_139.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_140.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_141.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_142.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_143.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_144.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_145.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_146.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_147.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_148.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_149.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_150.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_151.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_152.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_153.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_154.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_155.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_156.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_157.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_158.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_159.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_160.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_161.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_162.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_163.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_164.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_165.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_166.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_167.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_168.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_169.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_170.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_171.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_172.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_173.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_174.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_175.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_176.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_177.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_178.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_179.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_180.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_181.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_182.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_183.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_184.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_185.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_186.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_187.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_188.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_189.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_190.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_191.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_192.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_193.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_194.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_195.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_196.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_197.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_198.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_199.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_13_200.pdf}
+
+\begin{itemize}
+\item[5. ] [2 points] Initialize a variational distribution parameters and optimize them to approximate the joint where we observe player A winning 10 games. Report the final loss. Also plot the optimized variational approximation contours (in blue) aand the target distribution (in red) on the same axes.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLn{games{\_}10}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*)(*@\HLJLni{0}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{init{\_}params}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{toy{\_}mu}@*)(*@\HLJLp{,}@*) (*@\HLJLn{toy{\_}ls}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{fit{\_}toy{\_}variational{\_}dist}@*)(*@\HLJLp{(}@*)(*@\HLJLn{init{\_}params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}10}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+([1.2450496733750882, -1.0913139665046476], [-0.30162075538677385, -0.33696
+319330773966])
+\end{lstlisting}
+
+\includegraphics[width=0.1\textwidth]{figures/A2_14_1.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_2.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_3.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_4.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_5.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_6.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_7.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_8.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_9.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_10.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_11.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_12.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_13.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_14.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_15.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_16.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_17.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_18.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_19.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_20.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_21.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_22.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_23.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_24.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_25.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_26.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_27.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_28.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_29.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_30.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_31.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_32.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_33.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_34.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_35.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_36.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_37.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_38.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_39.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_40.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_41.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_42.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_43.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_44.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_45.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_46.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_47.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_48.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_49.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_50.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_51.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_52.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_53.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_54.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_55.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_56.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_57.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_58.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_59.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_60.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_61.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_62.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_63.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_64.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_65.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_66.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_67.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_68.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_69.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_70.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_71.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_72.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_73.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_74.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_75.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_76.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_77.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_78.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_79.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_80.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_81.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_82.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_83.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_84.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_85.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_86.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_87.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_88.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_89.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_90.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_91.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_92.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_93.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_94.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_95.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_96.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_97.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_98.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_99.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_100.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_101.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_102.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_103.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_104.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_105.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_106.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_107.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_108.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_109.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_110.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_111.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_112.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_113.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_114.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_115.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_116.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_117.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_118.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_119.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_120.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_121.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_122.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_123.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_124.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_125.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_126.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_127.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_128.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_129.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_130.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_131.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_132.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_133.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_134.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_135.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_136.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_137.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_138.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_139.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_140.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_141.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_142.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_143.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_144.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_145.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_146.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_147.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_148.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_149.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_150.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_151.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_152.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_153.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_154.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_155.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_156.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_157.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_158.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_159.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_160.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_161.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_162.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_163.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_164.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_165.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_166.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_167.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_168.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_169.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_170.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_171.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_172.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_173.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_174.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_175.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_176.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_177.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_178.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_179.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_180.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_181.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_182.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_183.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_184.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_185.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_186.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_187.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_188.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_189.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_190.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_191.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_192.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_193.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_194.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_195.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_196.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_197.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_198.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_199.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_14_200.pdf}
+
+\begin{itemize}
+\item[6. ] [2 points] Initialize a variational distribution parameters and optimize them to approximate the joint where we observe player A winning 10 games and player B winning 10 games. Report the final loss. Also plot the optimized variational approximation contours (in blue) aand the target distribution (in red) on the same axes.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLn{games{\_}10{\_}10}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{two{\_}player{\_}toy{\_}games}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*)(*@\HLJLni{10}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{init{\_}params}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{toy{\_}mu}@*)(*@\HLJLp{,}@*) (*@\HLJLn{toy{\_}ls}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{fit{\_}toy{\_}variational{\_}dist}@*)(*@\HLJLp{(}@*)(*@\HLJLn{init{\_}params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}10{\_}10}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+([0.048722990838063245, 0.07874878355323078], [-0.8150317419028679, -0.8230
+759123150411])
+\end{lstlisting}
+
+\includegraphics[width=0.1\textwidth]{figures/A2_15_1.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_2.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_3.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_4.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_5.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_6.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_7.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_8.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_9.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_10.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_11.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_12.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_13.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_14.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_15.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_16.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_17.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_18.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_19.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_20.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_21.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_22.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_23.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_24.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_25.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_26.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_27.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_28.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_29.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_30.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_31.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_32.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_33.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_34.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_35.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_36.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_37.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_38.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_39.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_40.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_41.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_42.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_43.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_44.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_45.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_46.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_47.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_48.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_49.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_50.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_51.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_52.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_53.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_54.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_55.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_56.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_57.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_58.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_59.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_60.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_61.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_62.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_63.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_64.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_65.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_66.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_67.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_68.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_69.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_70.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_71.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_72.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_73.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_74.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_75.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_76.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_77.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_78.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_79.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_80.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_81.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_82.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_83.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_84.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_85.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_86.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_87.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_88.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_89.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_90.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_91.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_92.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_93.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_94.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_95.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_96.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_97.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_98.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_99.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_100.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_101.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_102.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_103.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_104.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_105.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_106.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_107.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_108.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_109.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_110.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_111.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_112.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_113.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_114.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_115.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_116.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_117.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_118.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_119.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_120.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_121.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_122.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_123.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_124.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_125.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_126.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_127.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_128.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_129.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_130.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_131.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_132.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_133.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_134.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_135.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_136.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_137.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_138.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_139.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_140.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_141.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_142.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_143.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_144.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_145.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_146.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_147.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_148.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_149.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_150.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_151.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_152.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_153.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_154.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_155.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_156.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_157.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_158.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_159.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_160.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_161.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_162.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_163.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_164.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_165.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_166.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_167.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_168.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_169.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_170.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_171.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_172.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_173.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_174.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_175.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_176.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_177.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_178.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_179.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_180.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_181.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_182.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_183.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_184.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_185.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_186.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_187.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_188.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_189.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_190.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_191.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_192.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_193.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_194.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_195.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_196.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_197.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_198.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_199.pdf}
+\includegraphics[width=0.1\textwidth]{figures/A2_15_200.pdf}
+
+For all plots, label both axes.
+
+\section{Approximate inference conditioned on real data [24 points]}
+Load the dataset from tennis data.mat containing two matrices:
+
+\ensuremath{\bullet} W is a 107 by 1 matrix, whose i\ensuremath{\rq}th entry is the name of player i.
+
+\ensuremath{\bullet} G is a 1801 by 2 matrix of game outcomes (actually tennis matches), one row per game. The first column contains the indices of the players who won. The second column contains the indices of the player who lost.
 
 Compute the following using your code from the earlier questions in the assignment, but conditioning on the tennis match outcomes:
-\begin{enumerate}[label=(\alph*)]
-\item {\bf [1 point]} For any two players $i$ and $j$, $p(z_i, z_j | \textnormal{all games})$ is always proportional to
-	$p(z_i, z_j , \textnormal{all games})$.
-	In general, are the isocontours of $p(z_i, z_j | \textnormal{all games})$ the same as those of
-	$p(z_i, z_j | \textnormal{games between $i$ and $j$})$?  That is, do the games between
-	other players besides $i$ and $j$ provide information about the skill of
-	players $i$ and $j$?  A simple yes or no suffices.
-	
-	Hint: One way to answer this is to draw the graphical model for three players,
-	$i$, $j$, and $k$, and the results of games between all three pairs, and then
-	examine conditional independencies.  If you do this, there's no need to include
-	the graphical models in your assignment.
-\item {\bf [5 points]} Write a new optimization function \texttt{fit\_variational\_dist} like the one from the 
-  previous question except it does not plot anything.
-  Initialize a variational distribution and fit it to the joint distribution with all the observed tennis games from the dataset.
-  Report the final negative ELBO estimate after optimization.
-\item {\bf [2 points]} Plot the approximate mean and variance of all players, sorted by skill.  For example, in Julia, you can use:
-\texttt{perm = sortperm(means);
-	plot(means[perm], yerror=exp.(logstd[perm]))}
-There's no need to include the names of the players.
-\item {\bf [2 points]} List the names of the 10 players with the highest mean skill under the variational model.
-\item {\bf [3 points]} Plot the joint posterior over the skills of Roger Federer and Rafael Nadal.
-\item {\bf [5 points]} Derive the exact probability under a factorized Guassian over two players' skills that one has higher skill than the other, as a function of the two means and variances over their skills.
+
 \begin{itemize}
-\item Hint 1: Use a linear change of variables $y_A, y_B = z_A - z_B, z_B$.  What does the line of equal skill look like after this transformation?
-\item Hint 2: If $X \sim \mathcal{N}(\mu, \Sigma)$, then $AX \sim \mathcal{N}(A \mu, A^{T} \Sigma A)$ where $A$ is a linear transformation.
-\item Hint 3: Marginalization in Gaussians is easy: if $X \sim \mathcal{N}(\mu, \Sigma)$, then the $i$th element of $X$ has a marginal distribution $X_i \sim \mathcal{N}(\mu_i, \Sigma_{ii})$ 
+\item[1. ] [1point]Foranytwoplayersiandj,p(zi,zj|all games) isalwaysproportionaltop(zi,zj,all games). In general, are the isocontours of p(zi, zj |all games) the same as those of p(zi, zj |games between i and j)? That is, do the games between other players besides i and j provide information about the skill of players i and j? A simple yes or no suffices.  Hint: One way to answer this is to draw the graphical model for three players, i, j, and k, and the results of games between all three pairs, and then examine conditional independencies. If you do this, there\ensuremath{\rq}s no need to include the graphical models in your assignment.
+
 \end{itemize}
-\item {\bf [2 points]} Compute the probability under your approximate posterior that
-	Roger Federer has higher skill than Rafael Nadal.
-	Compute this quantity exactly, and then estimate it using simple Monte Carlo with 10000 examples.
-\item {\bf [2 points]} Compute the probability that Roger Federer is better than the player
-	with the lowest mean skill.
-	Compute this quantity exactly, and then estimate it using simple Monte Carlo with 10000 examples.
-\item {\bf [2 points]} Imagine that we knew ahead of time that we were examining the
-	skills of top tennis players, and so changed our prior on all players to
-	Normal(10, 1).
-	Which answers in this section would this change?
-	No need to show your work, just list the letters of the questions whose answers would be different in expectation.
-\end{enumerate}
+No. The isocontours of p(zi, zj |all games) is not the same as those of p(zi, zj |games between i and j). So, the games between other players besides i and j do provide information about the skill of players i and j.
+
+\begin{itemize}
+\item[2. ] [5 points] Write a new optimization function fit variational dist like the one from the previous question except it does not plot anything. Initialize a variational distribution and fit it to the joint distribution with all the observed tennis games from the dataset. Report the final negative ELBO estimate after optimization.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Load}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{Data}@*)
+(*@\HLJLk{using}@*) (*@\HLJLn{MAT}@*)
+(*@\HLJLn{vars}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{matread}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}tennis{\_}data.mat"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{player{\_}names}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{vars}@*)(*@\HLJLp{[}@*)(*@\HLJLs{"{}W"{}}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{tennis{\_}games}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{Int}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{vars}@*)(*@\HLJLp{[}@*)(*@\HLJLs{"{}G"{}}@*)(*@\HLJLp{])}@*)
+(*@\HLJLn{num{\_}players}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{player{\_}names}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{print}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}Loaded}@*) (*@\HLJLs{data}@*) (*@\HLJLs{for}@*) (*@\HLJLsi{{\$}num{\_}players}@*) (*@\HLJLs{players"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Loaded data for 107 players
+\end{lstlisting}
 
 
+\begin{lstlisting}
+(*@\HLJLk{function}@*) (*@\HLJLnf{fit{\_}variational{\_}dist}@*)(*@\HLJLp{(}@*)(*@\HLJLn{init{\_}params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{tennis{\_}games}@*)(*@\HLJLp{;}@*) (*@\HLJLn{num{\_}itrs}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{200}@*)(*@\HLJLp{,}@*) (*@\HLJLn{lr}@*)(*@\HLJLoB{=}@*) (*@\HLJLnfB{1e-2}@*)(*@\HLJLp{,}@*) (*@\HLJLn{num{\_}q{\_}samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{10}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{params{\_}cur}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{init{\_}params}@*)
+  (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLkp{in}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{num{\_}itrs}@*)
+    (*@\HLJLn{grad{\_}params}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{gradient}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params}@*) (*@\HLJLoB{->}@*)
+    (*@\HLJLnf{neg{\_}toy{\_}elbo}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{tennis{\_}games}@*)(*@\HLJLp{,}@*) (*@\HLJLn{num{\_}samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{num{\_}q{\_}samples}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLp{,}@*) (*@\HLJLn{params{\_}cur}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{gradients}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{variational}@*) (*@\HLJLcs{objective}@*) (*@\HLJLcs{wrt}@*) (*@\HLJLcs{params}@*)
+    (*@\HLJLn{params{\_}cur}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{params{\_}cur}@*) (*@\HLJLoB{.-}@*) (*@\HLJLn{lr}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{grad{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+    (*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{update}@*) (*@\HLJLcs{parmaeters}@*) (*@\HLJLcs{wite}@*) (*@\HLJLcs{lr-sized}@*) (*@\HLJLcs{steps}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{desending}@*) (*@\HLJLcs{gradient}@*) (*@\HLJLcs{direction}@*)
+    (*@\HLJLn{neg{\_}elbo}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{neg{\_}toy{\_}elbo}@*)(*@\HLJLp{(}@*)(*@\HLJLn{params{\_}cur}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{tennis{\_}games}@*)(*@\HLJLp{,}@*) (*@\HLJLn{num{\_}samples}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{num{\_}q{\_}samples}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnd{@info}@*) (*@\HLJLs{"{}elbo:}@*) (*@\HLJLsi{{\$}neg{\_}elbo}@*)(*@\HLJLs{"{}}@*) (*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{report}@*) (*@\HLJLcs{objective}@*) (*@\HLJLcs{value}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{current}@*) (*@\HLJLcs{parameters}@*)
+  (*@\HLJLk{end}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLn{params{\_}cur}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+fit_variational_dist (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[3. ] [2 points] Plot the approximate mean and variance of all players, sorted by skill. For example, in Julia, you can use: perm = sortperm(means); plot(means[perm], yerror=exp.(logstd[perm])) There\ensuremath{\rq}s no need to include the names of the players.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{TODO:}@*) (*@\HLJLcs{Initialize}@*) (*@\HLJLcs{variational}@*) (*@\HLJLcs{family}@*)
+(*@\HLJLn{init{\_}mu}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{randn}@*)(*@\HLJLp{(}@*)(*@\HLJLn{num{\_}players}@*)(*@\HLJLp{)}@*)(*@\HLJLcs{{\#}random}@*) (*@\HLJLcs{initialziation}@*)
+(*@\HLJLn{init{\_}log{\_}sigma}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{randn}@*)(*@\HLJLp{(}@*)(*@\HLJLn{num{\_}players}@*)(*@\HLJLp{)}@*)(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{random}@*) (*@\HLJLcs{initialziation}@*)
+(*@\HLJLn{init{\_}params}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{init{\_}mu}@*)(*@\HLJLp{,}@*) (*@\HLJLn{init{\_}log{\_}sigma}@*)(*@\HLJLp{)}@*)
+
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Train}@*) (*@\HLJLcs{variational}@*) (*@\HLJLcs{distribution}@*)
+(*@\HLJLn{trained{\_}params}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{fit{\_}variational{\_}dist}@*)(*@\HLJLp{(}@*)(*@\HLJLn{init{\_}params}@*)(*@\HLJLp{,}@*) (*@\HLJLn{tennis{\_}games}@*)(*@\HLJLp{)}@*)
+
+
+(*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{10}@*) (*@\HLJLcs{players}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{highest}@*) (*@\HLJLcs{mean}@*) (*@\HLJLcs{skill}@*) (*@\HLJLcs{under}@*) (*@\HLJLcs{variational}@*) (*@\HLJLcs{model}@*)
+(*@\HLJLcs{{\#}hint:}@*) (*@\HLJLcs{use}@*) (*@\HLJLcs{sortperm}@*)
+(*@\HLJLn{perm}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{sortperm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{][}@*)(*@\HLJLn{perm}@*)(*@\HLJLp{],}@*) (*@\HLJLn{yerror}@*)(*@\HLJLoB{=}@*)(*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{][}@*)(*@\HLJLn{perm}@*)(*@\HLJLp{]),}@*)
+      (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Mean"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Standard}@*) (*@\HLJLs{Error"{}}@*)(*@\HLJLp{,}@*)
+      (*@\HLJLn{title}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}All}@*) (*@\HLJLs{Players{\textquotesingle}}@*) (*@\HLJLs{Skill}@*) (*@\HLJLs{Plot"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{figures/A2_17_1.pdf}
+
+\begin{itemize}
+\item[4. ] [2 points] List the names of the 10 players with the highest mean skill under the variational model.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLn{p{\_}names}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[]}@*)
+
+(*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLkp{in}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{10}@*)
+  (*@\HLJLn{p{\_}name}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{player{\_}names}@*)(*@\HLJLp{[}@*)(*@\HLJLn{perm}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{]]}@*)
+  (*@\HLJLnf{push!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{p{\_}names}@*)(*@\HLJLp{,}@*) (*@\HLJLn{p{\_}name}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+(*@\HLJLn{p{\_}names}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+10-element Array{Any,1}:
+ "Rui-Machado"          
+ "Mikhail-Elgin"        
+ "Mikhail-Kukushkin"    
+ "Alexander-Peya"       
+ "Dustin-Brown"         
+ "Rohan-Bopanna"        
+ "Ruben-Ramirez-Hidalgo"
+ "Denis-Istomin"        
+ "Juan-Sebastian-Cabal" 
+ "Grigor-Dimitrov"
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[5. ] [3 points] Plot the joint approximate posterior over the skills of Roger Federer and Rafael Nadal. Use the approximate posterior that you fit in question 4 part b.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}TODO:}@*) (*@\HLJLcs{joint}@*) (*@\HLJLcs{posterior}@*) (*@\HLJLcs{over}@*) (*@\HLJLcs{"{}Roger-Federer"{}}@*) (*@\HLJLcs{and}@*) (*@\HLJLcs{"{}"{}Rafael-Nadal"{}"{}}@*)
+(*@\HLJLcs{{\#}hint:}@*) (*@\HLJLcs{findall}@*) (*@\HLJLcs{function}@*) (*@\HLJLcs{to}@*) (*@\HLJLcs{find}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{index}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{these}@*) (*@\HLJLcs{players}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{player{\_}names}@*)
+(*@\HLJLn{roger}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{findfirst}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{==}@*) (*@\HLJLs{"{}Roger-Federer"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{player{\_}names}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{rafael}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{findfirst}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{==}@*) (*@\HLJLs{"{}Rafael-Nadal"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{player{\_}names}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{mu{\_}fed{\_}Nad}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{][}@*)(*@\HLJLn{roger}@*)(*@\HLJLp{],}@*) (*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{][}@*)(*@\HLJLn{rafael}@*)(*@\HLJLp{]]}@*)
+(*@\HLJLn{ls{\_}fed{\_}Nad}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{][}@*)(*@\HLJLn{roger}@*)(*@\HLJLp{],}@*) (*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{][}@*)(*@\HLJLn{rafael}@*)(*@\HLJLp{]]}@*)
+
+(*@\HLJLnf{joint{\_}pos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{factorized{\_}gaussian{\_}log{\_}density}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu{\_}fed{\_}Nad}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ls{\_}fed{\_}Nad}@*)(*@\HLJLp{,}@*) (*@\HLJLn{zs}@*)(*@\HLJLp{))}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Joint}@*) (*@\HLJLs{Posterior}@*) (*@\HLJLs{over}@*) (*@\HLJLs{Roger}@*) (*@\HLJLs{Federer}@*) (*@\HLJLs{and}@*) (*@\HLJLs{Rafael}@*) (*@\HLJLs{Nadal"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{xlabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Roger}@*) (*@\HLJLs{Federer}@*) (*@\HLJLs{Skill"{}}@*)(*@\HLJLp{,}@*)
+    (*@\HLJLn{ylabel}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}Rafael}@*) (*@\HLJLs{Nadal}@*) (*@\HLJLs{Skill"{}}@*)
+   (*@\HLJLp{)}@*)
+(*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{joint{\_}pos}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
+(*@\HLJLnf{savefig}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joinpath}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}plots"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLs{"{}Joint{\_}Posterior{\_}over{\_}Roger{\_}Federer{\_}and{\_}Rafael{\_}Nadal.pdf"{}}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[6. ] [5 points] Derive the exact probability under a factorized Guassian over two players\ensuremath{\rq} skills that one has higher skill than the other, as a function of the two means and variances over their skills. Express your answer in terms of the cumulative distribution function of a one-dimensional Gaussian random variable.
+
+\end{itemize}
+\ensuremath{\bullet} Hint 1: Use a linear change of variables $yA,yB = zA - zB,zB$. What does the line of equal skill look like after this transformation?
+
+\ensuremath{\bullet} Hint 2: If $X \ensuremath{\sim} N (\ensuremath{\mu}, \ensuremath{\Sigma})$, then $AX \ensuremath{\sim} N (A\ensuremath{\mu}, A\ensuremath{\Sigma}AT )$ where A is a linear transformation.
+
+\ensuremath{\bullet} Hint 3: Marginalization in Gaussians is easy: if $X \ensuremath{\sim} N (\ensuremath{\mu}, \ensuremath{\Sigma})$, then the ith element of X has a marginal distribution $Xi \ensuremath{\sim} N(\ensuremath{\mu}i,\ensuremath{\Sigma}ii)$
+
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{Distributions}@*)
+
+(*@\HLJLk{function}@*) (*@\HLJLnf{calculate{\_}prob{\_}a{\_}higher{\_}than{\_}b}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ls}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{A}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{;}@*) (*@\HLJLni{0}@*) (*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+  (*@\HLJLn{sigma}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ls}@*)(*@\HLJLp{)}@*)
+  (*@\HLJLn{mu{\_}ya}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{A}@*) (*@\HLJLoB{*}@*) (*@\HLJLn{mu}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+  (*@\HLJLn{sigma{\_}ya}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{A}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{sigma}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{A}@*)(*@\HLJLoB{{\textquotesingle}}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{][}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+  (*@\HLJLk{return}@*) (*@\HLJLni{1}@*) (*@\HLJLoB{-}@*) (*@\HLJLnf{cdf}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Normal}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu{\_}ya}@*)(*@\HLJLp{,}@*) (*@\HLJLn{sigma{\_}ya}@*)(*@\HLJLp{),}@*) (*@\HLJLni{0}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+calculate_prob_a_higher_than_b (generic function with 1 method)
+\end{lstlisting}
+
+
+
+\begin{align}
+A =
+\begin{bmatrix}
+1 & -1\\
+0 & 1
+\end{bmatrix}\\
+\mu = [\mu_1 \mu_2]\\
+\sigma = [\sigma_1 \sigma_2]\\
+1 - cdf(N({A * mu}_1, {A .* sigma .* A'}_{11}), 0)
+\end{align}
+\begin{itemize}
+\item[7. ] [2 points] Using the formula from part c, compute the exact probability under your approximate posterior that Roger Federer has higher skill than Rafael Nadal. Then, estimate it using simple Monte Carlo with 10000 examples, again using your approximate posterior.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Roger-Federer{\textquotesingle}s}@*) (*@\HLJLcs{skill}@*) (*@\HLJLcs{is}@*) (*@\HLJLcs{higher}@*) (*@\HLJLcs{than}@*) (*@\HLJLcs{Rafael-Nadal{\textquotesingle}s}@*)
+(*@\HLJLn{p1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{calculate{\_}prob{\_}a{\_}higher{\_}than{\_}b}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu{\_}fed{\_}Nad}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ls{\_}fed{\_}Nad}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{print}@*)(*@\HLJLp{(}@*)(*@\HLJLn{p1}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.6963614475764168
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{sample{\_}Fed}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{rand}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Normal}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu{\_}fed{\_}Nad}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ls{\_}fed{\_}Nad}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])),}@*) (*@\HLJLni{10000}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{sample{\_}Nad}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{rand}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Normal}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu{\_}fed{\_}Nad}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{],}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ls{\_}fed{\_}Nad}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{])),}@*) (*@\HLJLni{10000}@*)(*@\HLJLp{)}@*)
+
+(*@\HLJLn{sum{\_}F{\_}N}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{sum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{sample{\_}Fed}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{>}@*) (*@\HLJLn{sample{\_}Nad}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{]}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLkp{in}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{10000}@*)(*@\HLJLp{)}@*)
+
+(*@\HLJLn{prob{\_}Fed{\_}higher{\_}than{\_}Nad}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{sum{\_}F{\_}N}@*) (*@\HLJLoB{/}@*) (*@\HLJLni{10000}@*)
+(*@\HLJLnf{print}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prob{\_}Fed{\_}higher{\_}than{\_}Nad}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.6454
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[8. ] [2 points] Using the formula from part c, compute the probability that Roger Federer is better than the player with the lowest mean skill. Compute this quantity exactly, and then estimate it using simple Monte Carlo with 10000 examples, again using your approximate posterior.
+
+\end{itemize}
+
+\begin{lstlisting}
+(*@\HLJLn{lowest{\_}mean}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{minimum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+(*@\HLJLn{lowest{\_}index}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{findfirst}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{==}@*) (*@\HLJLn{lowest{\_}mean}@*)(*@\HLJLp{,}@*) (*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+(*@\HLJLn{lowest{\_}ls}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{trained{\_}params}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{][}@*)(*@\HLJLn{lowest{\_}index}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{player{\_}names}@*)(*@\HLJLp{[}@*)(*@\HLJLn{lowest{\_}index}@*)(*@\HLJLp{]}@*)
+
+(*@\HLJLn{mu{\_}Fed{\_}lowest}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLn{mu{\_}fed{\_}Nad}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*) (*@\HLJLn{lowest{\_}mean}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{ls{\_}Fed{\_}lowest}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLn{ls{\_}fed{\_}Nad}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*) (*@\HLJLn{lowest{\_}ls}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{p2}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{calculate{\_}prob{\_}a{\_}higher{\_}than{\_}b}@*)(*@\HLJLp{(}@*)(*@\HLJLn{mu{\_}Fed{\_}lowest}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ls{\_}Fed{\_}lowest}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{print}@*)(*@\HLJLp{(}@*)(*@\HLJLn{p2}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+1.0
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{sample{\_}lowest}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{rand}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Normal}@*)(*@\HLJLp{(}@*)(*@\HLJLn{lowest{\_}mean}@*)(*@\HLJLp{,}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLn{lowest{\_}ls}@*)(*@\HLJLp{)),}@*) (*@\HLJLni{10000}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{sum{\_}F{\_}lowest}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{sum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{sample{\_}Fed}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{>}@*) (*@\HLJLn{sample{\_}lowest}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{]}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLkp{in}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{10000}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{prob{\_}Fed{\_}higher{\_}than{\_}lowest}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{sum{\_}F{\_}lowest}@*) (*@\HLJLoB{/}@*) (*@\HLJLni{10000}@*)
+(*@\HLJLnf{print}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prob{\_}Fed{\_}higher{\_}than{\_}lowest}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+1.0
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[9.  ] [2 points] Imagine that we knew ahead of time that we were examining the skills of top tennis players, and so changed our prior on all players to Normal(10, 1). Which answers in this section would this change? No need to show your work, just list the letters of the questions whose answers would be different in expectation.
+
+\end{itemize}
+Answer in section c, e, f, g would be different.
 
 
 
