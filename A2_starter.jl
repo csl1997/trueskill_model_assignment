@@ -232,9 +232,10 @@ plot(trained_params[1][perm], yerror=exp.(trained_params[2][perm]),
 savefig(joinpath("plots","all_players'_skill.pdf"))
 
 p_names = []
+temp = reverse(perm)
 
 for i in 1:10
-  p_name = player_names[perm[i]]
+  p_name = player_names[temp[i]]
   push!(p_names, p_name)
 end
 p_names
