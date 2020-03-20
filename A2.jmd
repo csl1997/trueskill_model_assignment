@@ -464,4 +464,4 @@ print(prob_Fed_higher_than_lowest)
 ```
 9.  [2 points] Imagine that we knew ahead of time that we were examining the skills of top tennis players, and so changed our prior on all players to Normal(10, 1). Which answers in this section would this change? No need to show your work, just list the letters of the questions whose answers would be different in expectation.
 
-Answer in section c, e, f, g would be different.
+Answer in section c, e would be different.
