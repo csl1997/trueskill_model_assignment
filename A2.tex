@@ -262,7 +262,6 @@ We also provided a function two player toy games which produces toy data for two
 (*@\HLJLnf{example{\_}gaussian}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{factorized{\_}gaussian{\_}log{\_}density}@*)(*@\HLJLp{([}@*)(*@\HLJLoB{-}@*)(*@\HLJLnfB{1.}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{2.}@*)(*@\HLJLp{],[}@*)(*@\HLJLnfB{0.}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{],}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{))}@*)
 (*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{example{\_}gaussian}@*)(*@\HLJLp{)}@*)(*@\HLJLcs{{\#};}@*) (*@\HLJLcs{l="{}example}@*) (*@\HLJLcs{gaussian"{})}@*)
 (*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
-(*@\HLJLnf{savefig}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joinpath}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}plots"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLs{"{}example{\_}gaussian.pdf"{}}@*)(*@\HLJLp{))}@*)
 
 
 (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{TODO:}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{prior}@*) (*@\HLJLcs{contours}@*)
@@ -291,9 +290,9 @@ We also provided a function two player toy games which produces toy data for two
 (*@\HLJLnf{likelihood}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{exp}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{all{\_}games{\_}log{\_}likelihood}@*)(*@\HLJLp{(}@*)(*@\HLJLn{zs}@*)(*@\HLJLp{,}@*) (*@\HLJLn{games{\_}1}@*)(*@\HLJLp{))}@*)
 (*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{likelihood}@*)(*@\HLJLp{)}@*)
 (*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
-(*@\HLJLnf{savefig}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joinpath}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}plots"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLs{"{}likelihood{\_}contours.pdf"{}}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
+\includegraphics[width=\linewidth]{figures/A2_6_1.pdf}
 
 \begin{itemize}
 \item[3. ] [2 points] Plot isocountours of the joint posterior over zA and zB given that player A beat player B in one match. Since the contours don\ensuremath{\rq}t depend on the normalization constant, you can simply plot the isocontours of the log of joint distribution of p(zA,zB,A beat B) Also plot the line of equal skill, zA =zB.
@@ -471,8 +470,8 @@ fit_toy_variational_dist (generic function with 1 method)
 \end{lstlisting}
 
 \begin{lstlisting}
-([0.2537298754925179, -0.08864656218944625], [-0.08044272290544474, -0.0840
-1019736023582])
+([0.22895318572416548, -0.0856944218176897], [-0.06365670883438625, -0.0699
+8004198216344])
 \end{lstlisting}
 
 \includegraphics[width=0.1\textwidth]{figures/A2_13_1.pdf}
@@ -688,8 +687,8 @@ fit_toy_variational_dist (generic function with 1 method)
 \end{lstlisting}
 
 \begin{lstlisting}
-([1.2292293961598095, -1.1081897375630698], [-0.2980960436603207, -0.320210
-431459923])
+([1.2627174413236613, -1.1492155744965689], [-0.3322130495293645, -0.348282
+62920500563])
 \end{lstlisting}
 
 \includegraphics[width=0.1\textwidth]{figures/A2_14_1.pdf}
@@ -905,8 +904,8 @@ fit_toy_variational_dist (generic function with 1 method)
 \end{lstlisting}
 
 \begin{lstlisting}
-([0.05096936142182415, 0.0736640610227848], [-0.8260017075658138, -0.883535
-885278676])
+([0.06329121892446109, 0.0533877001806899], [-0.8477557656039644, -0.824588
+8506080212])
 \end{lstlisting}
 
 \includegraphics[width=0.1\textwidth]{figures/A2_15_1.pdf}
@@ -1245,9 +1244,9 @@ fit_variational_dist (generic function with 1 method)
    (*@\HLJLp{)}@*)
 (*@\HLJLnf{skillcontour!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{joint{\_}pos}@*)(*@\HLJLp{)}@*)
 (*@\HLJLnf{plot{\_}line{\_}equal{\_}skill!}@*)(*@\HLJLp{()}@*)
-(*@\HLJLnf{savefig}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{joinpath}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}plots"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLs{"{}Joint{\_}Posterior{\_}over{\_}Roger{\_}Federer{\_}and{\_}Rafael{\_}Nadal.pdf"{}}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
+\includegraphics[width=\linewidth]{figures/A2_19_1.pdf}
 
 \begin{itemize}
 \item[6. ] [5 points] Derive the exact probability under a factorized Guassian over two players\ensuremath{\rq} skills that one has higher skill than the other, as a function of the two means and variances over their skills. Express your answer in terms of the cumulative distribution function of a one-dimensional Gaussian random variable.
@@ -1300,7 +1299,7 @@ A =
 \end{lstlisting}
 
 \begin{lstlisting}
-0.5464209869650729
+0.6700317839769261
 \end{lstlisting}
 
 
@@ -1315,7 +1314,7 @@ A =
 \end{lstlisting}
 
 \begin{lstlisting}
-0.5319
+0.6183
 \end{lstlisting}
 
 

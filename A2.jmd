@@ -115,7 +115,6 @@ plot(title="Example Gaussian Contour Plot",
 example_gaussian(zs) = exp(factorized_gaussian_log_density([-1.,2.],[0.,0.5],zs))
 skillcontour!(example_gaussian)#; l="example gaussian")
 plot_line_equal_skill!()
-savefig(joinpath("plots","example_gaussian.pdf"))
 
 
 # TODO: plot prior contours
@@ -140,7 +139,6 @@ games_1 = two_player_toy_games(1, 0)
 likelihood(zs) = exp.(all_games_log_likelihood(zs, games_1))
 skillcontour!(likelihood)
 plot_line_equal_skill!()
-savefig(joinpath("plots","likelihood_contours.pdf"))
 ```
 
 3. [2 points] Plot isocountours of the joint posterior over zA and zB given that player A beat player B in one match. Since the contours don’t depend on the normalization constant, you can simply plot the isocontours of the log of joint distribution of p(zA,zB,A beat B) Also plot the line of equal skill, zA =zB.
@@ -391,7 +389,6 @@ plot(title="Joint Posterior over Roger Federer and Rafael Nadal",
    )
 skillcontour!(joint_pos)
 plot_line_equal_skill!()
-savefig(joinpath("plots","Joint_Posterior_over_Roger_Federer_and_Rafael_Nadal.pdf"))
 ```
 
 6.  [5 points] Derive the exact probability under a factorized Guassian over two players’ skills that one has higher skill than the other, as a function of the two means and variances over their skills. Express your answer in terms of the cumulative distribution function of a one-dimensional Gaussian random variable.
